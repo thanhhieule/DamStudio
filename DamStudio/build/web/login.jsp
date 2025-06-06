@@ -56,7 +56,7 @@
                     </div>
 
                     <button type="submit">Đăng Nhập</button>
-                    <p class="register-link">Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+                    <p class="register-link">Chưa có tài khoản? <a href="register.jsp">Đăng ký ngay</a></p>
                 </form>
             </div>
         </main>

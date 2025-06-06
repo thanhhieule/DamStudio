@@ -3,193 +3,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/login.css" />
+        <link rel="stylesheet" href="css/register.css" />
         <title>Đăng Ký Tài Khoản</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .container {
-                flex: 1;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 20px;
-            }
-
-            .register-form {
-                background: white;
-                padding: 40px;
-                border-radius: 20px;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-                width: 100%;
-                max-width: 600px;
-                backdrop-filter: blur(10px);
-            }
-
-            .form-title {
-                text-align: center;
-                color: #333;
-                font-size: 2.5rem;
-                margin-bottom: 10px;
-                font-weight: 700;
-            }
-
-            .form-subtitle {
-                text-align: center;
-                color: #666;
-                margin-bottom: 30px;
-                font-size: 1rem;
-            }
-
-            .form-row {
-                display: flex;
-                gap: 20px;
-                margin-bottom: 20px;
-            }
-
-            .form-group {
-                flex: 1;
-                margin-bottom: 20px;
-            }
-
-            .form-group label {
-                display: block;
-                margin-bottom: 8px;
-                color: #333;
-                font-weight: 600;
-                font-size: 0.95rem;
-            }
-
-            .form-group input,
-            .form-group select,
-            .form-group textarea {
-                width: 100%;
-                padding: 12px 16px;
-                border: 2px solid #e1e5e9;
-                border-radius: 10px;
-                font-size: 1rem;
-                transition: all 0.3s ease;
-                background-color: #f8f9fa;
-            }
-
-            .form-group input:focus,
-            .form-group select:focus,
-            .form-group textarea:focus {
-                outline: none;
-                border-color: #667eea;
-                background-color: white;
-                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            }
-
-            .gender-options {
-                display: flex;
-                gap: 20px;
-                margin-top: 8px;
-            }
-
-            .gender-option {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-
-            .gender-option input[type="radio"] {
-                width: auto;
-                margin: 0;
-            }
-
-            .gender-option label {
-                margin: 0;
-                font-weight: normal;
-                cursor: pointer;
-            }
-
-            textarea {
-                resize: vertical;
-                min-height: 80px;
-            }
-
-            .btn-register {
-                width: 100%;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 15px;
-                border: none;
-                border-radius: 10px;
-                font-size: 1.1rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                margin-top: 20px;
-            }
-
-            .btn-register:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            }
-
-            .btn-register:active {
-                transform: translateY(0);
-            }
-
-            .login-link {
-                text-align: center;
-                margin-top: 20px;
-                color: #666;
-            }
-
-            .login-link a {
-                color: #667eea;
-                text-decoration: none;
-                font-weight: 600;
-            }
-
-            .login-link a:hover {
-                text-decoration: underline;
-            }
-
-            .required {
-                color: #e74c3c;
-            }
-
-            @media (max-width: 768px) {
-                .form-row {
-                    flex-direction: column;
-                    gap: 0;
-                }
-                
-                .register-form {
-                    padding: 30px 20px;
-                    margin: 10px;
-                }
-                
-                .form-title {
-                    font-size: 2rem;
-                }
-                
-                .gender-options {
-                    flex-direction: column;
-                    gap: 10px;
-                }
-            }
-        </style>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
         
         <div class="container">
+            <!-- Hiển thị thông báo lỗi nếu có -->
+            <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+            <% if (errorMessage != null) { %>
+                <div class="error-message" style="color: red; text-align: center; margin: 10px 0;">
+                    <%= errorMessage %>
+                </div>
+            <% } %>
+            
             <form class="register-form" action="register" method="post">
                 <h2 class="form-title">Đăng Ký</h2>
                 <p class="form-subtitle">Tạo tài khoản mới để bắt đầu</p>
@@ -198,12 +26,14 @@
                     <div class="form-group">
                         <label for="username">Tên đăng nhập <span class="required">*</span></label>
                         <input type="text" id="username" name="username" required 
-                               placeholder="Nhập tên đăng nhập">
+                               placeholder="Nhập tên đăng nhập"
+                               value="<%= request.getAttribute("username") != null ? request.getAttribute("username") : "" %>">
                     </div>
                     <div class="form-group">
                         <label for="password">Mật khẩu <span class="required">*</span></label>
                         <input type="password" id="password" name="password" required 
-                               placeholder="Nhập mật khẩu">
+                               placeholder="Nhập mật khẩu"
+                               value="<%= request.getAttribute("password") != null ? request.getAttribute("password") : "" %>">
                     </div>
                 </div>
                 
@@ -211,12 +41,14 @@
                     <div class="form-group">
                         <label for="firstName">Tên <span class="required">*</span></label>
                         <input type="text" id="firstName" name="firstName" required 
-                               placeholder="Nhập tên của bạn">
+                               placeholder="Nhập tên của bạn"
+                               value="<%= request.getAttribute("firstName") != null ? request.getAttribute("firstName") : "" %>">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Họ <span class="required">*</span></label>
                         <input type="text" id="lastName" name="lastName" required 
-                               placeholder="Nhập họ của bạn">
+                               placeholder="Nhập họ của bạn"
+                               value="<%= request.getAttribute("lastName") != null ? request.getAttribute("lastName") : "" %>">
                     </div>
                 </div>
                 
@@ -224,15 +56,18 @@
                     <label>Giới tính <span class="required">*</span></label>
                     <div class="gender-options">
                         <div class="gender-option">
-                            <input type="radio" id="male" name="gender" value="male" required>
+                            <input type="radio" id="male" name="gender" value="1" required
+                                   <%= (request.getAttribute("gender") != null && request.getAttribute("gender").toString().equals("1")) ? "checked" : "" %>>
                             <label for="male">Nam</label>
                         </div>
                         <div class="gender-option">
-                            <input type="radio" id="female" name="gender" value="female" required>
+                            <input type="radio" id="female" name="gender" value="0" required
+                                   <%= (request.getAttribute("gender") != null && request.getAttribute("gender").toString().equals("0")) ? "checked" : "" %>>
                             <label for="female">Nữ</label>
                         </div>
                         <div class="gender-option">
-                            <input type="radio" id="other" name="gender" value="other" required>
+                            <input type="radio" id="other" name="gender" value="2" required
+                                   <%= (request.getAttribute("gender") != null && request.getAttribute("gender").toString().equals("2")) ? "checked" : "" %>>
                             <label for="other">Khác</label>
                         </div>
                     </div>
@@ -242,19 +77,21 @@
                     <div class="form-group">
                         <label for="email">Email <span class="required">*</span></label>
                         <input type="email" id="email" name="email" required 
-                               placeholder="example@email.com">
+                               placeholder="example@email.com"
+                               value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>">
                     </div>
                     <div class="form-group">
                         <label for="mobile">Số điện thoại <span class="required">*</span></label>
                         <input type="tel" id="mobile" name="mobile" required 
-                               placeholder="0123456789">
+                               placeholder="0123456789"
+                               value="<%= request.getAttribute("mobile") != null ? request.getAttribute("mobile") : "" %>">
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="address">Địa chỉ</label>
                     <textarea id="address" name="address" 
-                              placeholder="Nhập địa chỉ của bạn (tùy chọn)"></textarea>
+                              placeholder="Nhập địa chỉ của bạn (tùy chọn)"><%= request.getAttribute("address") != null ? request.getAttribute("address") : "" %></textarea>
                 </div>
                 
                 <button type="submit" class="btn-register">Đăng Ký</button>
